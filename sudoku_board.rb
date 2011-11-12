@@ -64,15 +64,22 @@ class SudokuBoard
       end
     end
   end
+  least[3] = least_length
   least
   end
 
   def fill_with_random_value
     position = get_position_with_least_options
-    values = return_valid_values(position[0],position[1])
-    boardwrite(position[0],position[1],values.shuffle.pop)
+    x = position[0]
+    y = position[1]
+    values = return_valid_values(x,y)
+    while not boardread(x,y)
+      boardwrite(x,y,values.shuffle.pop)
+      if get_position_with_least_options[3]
+        boardwrite(x,y,nil)
+      end
+    end
   end
-
 
 end
       
