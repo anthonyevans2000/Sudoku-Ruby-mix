@@ -20,9 +20,15 @@ class SudokuBoard
   
   end
 
-#  def return_valid_value(x,y)
-#    board[x].each{
-    
+  def return_valid_values(x,y)
+  occur = []
+  valid = (1..(@board.length)).to_a
+  occur = @board[x].compact
+  @board.each{|row| if row[y] != nil; occur << row[y] end}
+  occur.each{|x| valid.delete(x)}
+  valid
+  end   
+
 end
       
   
