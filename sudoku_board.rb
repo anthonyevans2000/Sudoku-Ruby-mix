@@ -6,7 +6,7 @@ class SudokuBoard
   
   
   def initialize
-    #Returns a 9x9 sudoku board, make of of 9 arrays of length nine.
+    #Returns a 9x9 sudoku board, made of of 9 arrays of length nine.
     @board = []
     9.times{@board << Array.new(9)}
   end
@@ -64,7 +64,7 @@ class SudokuBoard
       end
     end
   end
-  least[3] = least_length
+  least[2] = least_length
   least
   end
 
@@ -74,13 +74,15 @@ class SudokuBoard
     y = position[1]
     values = return_valid_values(x,y)
     while not boardread(x,y)
-      boardwrite(x,y,values.shuffle.pop)
-      if get_position_with_least_options[3]
+      values = values.shuffle
+      boardwrite(x,y,values.pop)
+      if 0 == get_position_with_least_options[2]
         boardwrite(x,y,nil)
+        if values.length == 0
+          raise "Out of values, stuck in dead end!"
+        end
       end
     end
   end
 
 end
-      
-  
