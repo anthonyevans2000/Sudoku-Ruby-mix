@@ -18,7 +18,7 @@
       end
     end
 
- Some code for the implementation of a list structure for dynamic programming
+# Some code for the implementation of a list structure for dynamic programming
 
   def sweep_valid_values
     index = 0
