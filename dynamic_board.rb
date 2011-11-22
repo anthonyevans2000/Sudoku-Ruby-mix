@@ -32,7 +32,7 @@
   def sort_value_list
     @list.sort!{|x,y| x[3] <=> y[3]}
   end  
- i 
+  
   def insert_from_list
     sort_value_list
     position = @list.pop
