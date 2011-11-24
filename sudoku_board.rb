@@ -1,22 +1,22 @@
 #A class to define a sudoku board and methods to operate on it
 
 class SudokuBoard
-  attr_accessor :recursive_iterations
+  attr_accessor :board_read, :return_sub_box, :board_write #, :recursive_iterations
   attr_reader :board
        
       
   def initialize(size = 3)
     #Returns a 9x9 sudoku board, made of of 9 arrays of length nine.
-    @recursive_iterations = 0
+    #@recursive_iterations = 0
     @num = size
     @size = size*size
     @board = []
     @size.times{@board << Array.new(@size)}
   end
     
-  def print
-    @board.each do |line|
-      puts line.join
+  def print(board = @board)
+    board.each do |line|
+      puts line.join(' ')
     end
   end
   
@@ -24,13 +24,13 @@ class SudokuBoard
     initialize(@num)
   end
 
-  def boardwrite(x,y,val,board = @board)
+  def board_write(x,y,val,board = @board)
     temp = board[y]
     temp[x] = val
     board[y] = temp
   end
     
-  def boardread(x,y,board = @board)
+  def board_read(x,y,board = @board)
     temp = board[y]
     temp[x]
   end
@@ -43,7 +43,15 @@ class SudokuBoard
     board[y_access].each{|row| box << row[x_access].dup}
     box
   end
-    
+   
+  def return_row y
+  @board[y]
+  end
+
+  def return_column x
+  @board.transpose[x]
+  end
+  
   #Returns an array of values that a 0-indexed position on @board can be filled with
   def return_valid_values(x,y,board = @board)
     occur = []
@@ -62,7 +70,7 @@ class SudokuBoard
     least = []
     (0...@size).each do |x|
       (0...@size).each do |y|
-        if not boardread(x,y,board)
+        if not board_read(x,y,board)
           least << [x,y,return_valid_values(x,y,board)]
         end
       end
@@ -92,8 +100,9 @@ class SudokuBoard
       begin
       if(values == []) then return false end
       val = values.pop
-      boardwrite(x,y,val,test_board)
-      @recursive_iterations += 1
+      board_write(x,y,val,test_board)
+
+      #@recursive_iterations += 1
       end while !(o = recursive_fill(test_board))
       return o
     end
